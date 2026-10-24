@@ -1,11 +1,10 @@
 {
-  "name": "sin-cos-identity-video",
+  "name": "buet-latitude-weight-loss",
   "version": "1.0.0",
   "private": true,
-  "description": "sin²θ + cos²θ = 1 — Bangla explainer video (Remotion)",
   "scripts": {
     "start": "remotion studio src/index.tsx",
-    "render": "remotion render src/index.tsx SinCosIdentity out/video.mp4"
+    "render": "remotion render src/index.tsx Main out/video.mp4"
   },
   "dependencies": {
     "@remotion/cli": "4.0.528",
@@ -16,7 +15,7 @@
     "remotion": "4.0.528"
   },
   "devDependencies": {
-    "@types/react": "19.2.0",
-    "typescript": "5.9.2"
+    "@types/react": "^19.2.0",
+    "typescript": "^5.9.0"
   }
 }
