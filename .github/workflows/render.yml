@@ -1,7 +1,7 @@
 name: Render video
 
 on:
-  push:            # any branch, any file change
+  push:
   workflow_dispatch:
 
 permissions:
@@ -25,12 +25,17 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y fonts-dejavu-core fonts-noto-core
 
-      - name: Check narration audio exists
+      # Audio না থাকলে 244 সেকেন্ডের silent placeholder বানায়।
+      # পরে public/narration.mp3 commit করলে আসল audio-ই ব্যবহার হবে।
+      - name: Use silent placeholder if narration.mp3 is missing
         run: |
-          ls -la public || true
-          if [ ! -f public/narration.mp3 ]; then
-            echo "::error::public/narration.mp3 not found. Commit your audio to public/narration.mp3"
-            exit 1
+          mkdir -p public
+          if [ -f public/narration.mp3 ]; then
+            echo "Found public/narration.mp3, using it."
+          else
+            echo "No narration.mp3, generating silent placeholder."
+            command -v ffmpeg >/dev/null || sudo apt-get install -y ffmpeg
+            ffmpeg -y -f lavfi -i anullsrc=r=44100:cl=mono -t 244 -q:a 9 public/narration.mp3
           fi
 
       - name: Install dependencies
